@@ -1,4 +1,4 @@
-package br.com.altamira.msg.gcm;
+package br.com.altamira.message.gcm;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,7 +17,7 @@ import org.springframework.messaging.converter.MessageConverter;
 import org.springframework.messaging.handler.annotation.support.PayloadArgumentResolver;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import br.com.altamira.msg.AWSNotificationMessageConverter;
+import br.com.altamira.message.AWSNotificationMessageConverter;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;

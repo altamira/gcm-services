@@ -1,4 +1,4 @@
-package br.com.altamira.msg.gcm.registration;
+package br.com.altamira.message.gcm.registration.service;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import br.com.altamira.message.gcm.registration.model.RegistrationInfo;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -29,8 +31,7 @@ public class RegistrationController {
 	 * @param notificationMessagingTemplate
 	 */
 	@Autowired
-	public RegistrationController(
-			RegistrationService registrationService) {
+	public RegistrationController(RegistrationService registrationService) {
 		this.registrationService = registrationService;
 	}
 
@@ -44,7 +45,7 @@ public class RegistrationController {
 	public @ResponseBody RegistrationInfo registrationInfo(
 			@RequestBody RegistrationInfo registrationInfo)
 			throws JsonProcessingException {
-		LOG.info("Registering a new device: " + registrationInfo.toString());
+		LOG.info("Registering a new device: {}", registrationInfo.toString());
 
 		return registrationService.store(registrationInfo);
 	}
@@ -59,8 +60,8 @@ public class RegistrationController {
 	public @ResponseBody RegistrationInfo updateRegistrationInfo(
 			@RequestBody RegistrationInfo registrationInfo)
 			throws JsonProcessingException {
-		LOG.info("Update registration info for a device: "
-				+ registrationInfo.toString());
+		LOG.info("Update registration info for a device: {}",
+				registrationInfo.toString());
 
 		return registrationService.store(registrationInfo);
 	}
@@ -73,15 +74,14 @@ public class RegistrationController {
 	 */
 	@RequestMapping(value = "/query", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Map<String, Object> query(
-			@RequestParam("email") String email)
-			throws JsonProcessingException {
-		LOG.info("Request to query tokens by registered user email: " + email);
+			@RequestParam("email") String email) throws JsonProcessingException {
+		LOG.info("Request to query tokens by registered user email: {}", email);
 
 		Map<String, Object> tokens = new HashMap<String, Object>();
-		
+
 		tokens.put("email", email);
 		tokens.put("tokens", registrationService.getTokensByEmail(email));
-		
+
 		return tokens;
 	}
 

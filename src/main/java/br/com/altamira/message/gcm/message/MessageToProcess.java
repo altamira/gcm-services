@@ -1,6 +1,8 @@
-package br.com.altamira.msg;
+package br.com.altamira.message.gcm.message;
 
 import java.util.Map;
+
+import br.com.altamira.message.GenericMessage;
 
 /**
  * @author Alessandro Holanda

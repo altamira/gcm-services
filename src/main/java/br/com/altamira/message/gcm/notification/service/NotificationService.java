@@ -1,4 +1,4 @@
-package br.com.altamira.msg.gcm.notification;
+package br.com.altamira.message.gcm.notification.service;
 
 import java.util.Arrays;
 import java.util.UUID;
@@ -13,6 +13,9 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.client.RestTemplate;
 
+import br.com.altamira.message.gcm.notification.model.CordovaPluginMessage;
+import br.com.altamira.message.gcm.notification.model.GCMMessage;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -22,9 +25,13 @@ public class NotificationService {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(NotificationService.class);
 
-	private static final String GCM_API_KEY = "AIzaSyCZhecyNPnKfsddqXZp3QCPz3hfdyX8SXA";
 	/**
-     *
+	 * Google API KEY
+	 */
+	private static final String GCM_API_KEY = "AIzaSyCZhecyNPnKfsddqXZp3QCPz3hfdyX8SXA";
+	
+	/**
+     * Queue to send notification
      */
 	public static final String MSG_SEND = "GCM_SEND_NOTIFICATION";
 
@@ -40,7 +47,7 @@ public class NotificationService {
     		String title,
     		String message,
     		Object payload) throws JsonProcessingException {
-    	LOG.info("Send notification to token: " + token);
+    	LOG.info("Send notification to token: {}", token);
     	
     	RestTemplate gcm = new RestTemplate();
     	

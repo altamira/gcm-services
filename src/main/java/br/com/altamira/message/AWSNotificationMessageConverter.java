@@ -1,4 +1,4 @@
-package br.com.altamira.msg;
+package br.com.altamira.message;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +36,7 @@ public class AWSNotificationMessageConverter extends
 				/*new MimeType("text", "plain", Charset.forName("UTF-8")),
 				new MimeType("application", "json", Charset.forName("UTF-8"))*/);
 		
-		LOG.debug("Start custom message converter");
+		LOG.debug("Start custom message converter.");
 		
 	}
 

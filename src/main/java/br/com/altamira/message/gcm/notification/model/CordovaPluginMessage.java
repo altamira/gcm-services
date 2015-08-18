@@ -1,4 +1,4 @@
-package br.com.altamira.msg.gcm.notification;
+package br.com.altamira.message.gcm.notification.model;
 
 public class CordovaPluginMessage {
 

@@ -1,4 +1,4 @@
-package br.com.altamira.msg.gcm.registration;
+package br.com.altamira.message.gcm.registration.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBDocument;
 

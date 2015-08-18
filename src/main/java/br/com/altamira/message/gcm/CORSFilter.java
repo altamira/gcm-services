@@ -1,4 +1,4 @@
-package br.com.altamira.msg.gcm;
+package br.com.altamira.message.gcm;
 
 import java.io.IOException;
 

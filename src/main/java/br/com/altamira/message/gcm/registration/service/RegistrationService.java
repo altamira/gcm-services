@@ -1,4 +1,4 @@
-package br.com.altamira.msg.gcm.registration;
+package br.com.altamira.message.gcm.registration.service;
 
 //import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
+import br.com.altamira.message.gcm.registration.model.RegistrationInfo;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;

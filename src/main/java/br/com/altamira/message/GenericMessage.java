@@ -1,4 +1,4 @@
-package br.com.altamira.msg;
+package br.com.altamira.message;
 
 import java.util.HashMap;
 import java.util.Map;

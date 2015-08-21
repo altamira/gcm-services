@@ -15,7 +15,6 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.messaging.converter.CompositeMessageConverter;
 import org.springframework.messaging.converter.MessageConverter;
 import org.springframework.messaging.handler.annotation.support.PayloadArgumentResolver;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import br.com.altamira.message.AWSNotificationMessageConverter;
 
@@ -32,7 +31,7 @@ import com.amazonaws.services.sqs.AmazonSQSAsyncClient;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @SpringBootApplication
-@EnableTransactionManagement
+//@EnableTransactionManagement
 public class Application {
 
 	/**

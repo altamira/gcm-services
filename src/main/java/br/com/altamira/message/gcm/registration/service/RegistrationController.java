@@ -6,6 +6,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.aws.messaging.core.NotificationMessagingTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.altamira.message.gcm.message.MessageToProcess;
 import br.com.altamira.message.gcm.registration.model.RegistrationInfo;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -24,6 +26,12 @@ public class RegistrationController {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(RegistrationController.class);
 
+    /**
+     *
+     */
+    public static final String MSG_REGISTERED = "GCM_REGISTERED";
+    
+	private NotificationMessagingTemplate notificationMessagingTemplate;
 	private RegistrationService registrationService;
 
 	/**
@@ -31,8 +39,11 @@ public class RegistrationController {
 	 * @param notificationMessagingTemplate
 	 */
 	@Autowired
-	public RegistrationController(RegistrationService registrationService) {
+	public RegistrationController(
+			RegistrationService registrationService,
+			NotificationMessagingTemplate notificationMessagingTemplate) {
 		this.registrationService = registrationService;
+		this.notificationMessagingTemplate = notificationMessagingTemplate;
 	}
 
 	/**
@@ -47,7 +58,14 @@ public class RegistrationController {
 			throws JsonProcessingException {
 		LOG.info("Registering a new device: {}", registrationInfo.toString());
 
-		return registrationService.store(registrationInfo);
+		RegistrationInfo register = registrationService.register(registrationInfo);
+		
+		MessageToProcess message = new MessageToProcess(register);
+		
+		this.notificationMessagingTemplate.sendNotification(MSG_REGISTERED,
+				message.toString(), "Notify a new Device Registered");
+		
+		return register;
 	}
 
 	/**
@@ -63,7 +81,14 @@ public class RegistrationController {
 		LOG.info("Update registration info for a device: {}",
 				registrationInfo.toString());
 
-		return registrationService.store(registrationInfo);
+		RegistrationInfo register = registrationService.register(registrationInfo);
+		
+		MessageToProcess message = new MessageToProcess(register);
+		
+		this.notificationMessagingTemplate.sendNotification(MSG_REGISTERED,
+				message.toString(), "Notify Device Register Info updated");
+		
+		return register;
 	}
 
 	/**

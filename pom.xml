@@ -5,7 +5,7 @@
 
 	<groupId>br.com.altamira</groupId>
 	<artifactId>gcm-notification-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>gcm-notification-service</name>
@@ -24,26 +24,26 @@
 	</properties>
 
 	<dependencies>
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-		<dependency>
+		</dependency> -->
+		<!-- <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-rest</artifactId>
-		</dependency>
-		<dependency>
+		</dependency> -->
+		<!-- <dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-aws</artifactId>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-aws-messaging</artifactId>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>

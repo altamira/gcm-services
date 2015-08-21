@@ -52,7 +52,7 @@ public class RegistrationService {
 		this.amazonDynamoDBClient = amazonDynamoDBClient;
 	}
 
-	public RegistrationInfo store(RegistrationInfo registrationInfo)
+	public RegistrationInfo register(RegistrationInfo registrationInfo)
 			throws JsonProcessingException {
 
 		ObjectMapper map = new ObjectMapper();

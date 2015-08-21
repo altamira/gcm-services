@@ -63,6 +63,9 @@ public class NotificationService {
     	
     	CordovaPluginMessage cordovaMessage = new CordovaPluginMessage();
     	
+    	if (title == null) { title = ""; }
+    	if (message == null) { message = ""; }
+    	
     	cordovaMessage.setTitle(title);
     	cordovaMessage.setMessage(message);
     	cordovaMessage.setPayload(payload);

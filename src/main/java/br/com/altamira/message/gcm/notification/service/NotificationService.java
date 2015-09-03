@@ -46,6 +46,7 @@ public class NotificationService {
     		String token,
     		String title,
     		String message,
+    		long ttl,
     		Object payload) throws JsonProcessingException {
     	LOG.info("Send notification to token: {}", token);
     	
@@ -59,7 +60,10 @@ public class NotificationService {
     	
     	gcmMessage.setToken(token);
     	gcmMessage.setCollapse_key(UUID.randomUUID().toString());
-    	gcmMessage.setTime_to_live(0); // now or never
+    	
+    	if (ttl >= 0l) {
+    		gcmMessage.setTime_to_live(ttl); // 0 = now or never
+    	}
     	
     	CordovaPluginMessage cordovaMessage = new CordovaPluginMessage();
     	

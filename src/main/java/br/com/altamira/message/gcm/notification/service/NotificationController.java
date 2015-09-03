@@ -65,6 +65,7 @@ public class NotificationController {
 					(String) message.getHeaders().get("token"), 
 					(String) message.getHeaders().get("title"),
 					(String) message.getHeaders().get("message"), 
+					message.getHeaders().get("ttl") != null ? (long) message.getHeaders().get("ttl") : -1l,
 					message.getPayload());
 
 			// Devices from a registered user
@@ -75,9 +76,12 @@ public class NotificationController {
 					(String) message.getHeaders().get("email"));
 
 			for (String token : tokens) {
-				notificationService.notifyCordovaPlugin(token, (String) message
-						.getHeaders().get("title"), (String) message
-						.getHeaders().get("message"), message.getPayload());
+				notificationService.notifyCordovaPlugin(
+						token, 
+						(String) message.getHeaders().get("title"), 
+						(String) message.getHeaders().get("message"),
+						message.getHeaders().get("ttl") != null ? (long) message.getHeaders().get("ttl") : -1l,
+						message.getPayload());
 			}
 
 		}
@@ -106,6 +110,7 @@ public class NotificationController {
 			notificationService.notifyCordovaPlugin(tokenToNotify,
 					(String) message.getHeaders().get("title"),
 					(String) message.getHeaders().get("message"),
+					message.getHeaders().get("ttl") != null ? (long) message.getHeaders().get("ttl") : -1l,
 					message.getPayload());
 
 			// Devices from a registered user
@@ -114,9 +119,12 @@ public class NotificationController {
 			List<String> tokens = registrationService.getTokensByEmail(emailToNotify);
 
 			for (String token : tokens) {
-				notificationService.notifyCordovaPlugin(token, (String) message
-						.getHeaders().get("title"), (String) message
-						.getHeaders().get("message"), message.getPayload());
+				notificationService.notifyCordovaPlugin(
+						token, 
+						(String) message.getHeaders().get("title"), 
+						(String) message.getHeaders().get("message"), 
+						message.getHeaders().get("ttl") != null ? (long) message.getHeaders().get("ttl") : -1l,
+						message.getPayload());
 			}
 
 		}

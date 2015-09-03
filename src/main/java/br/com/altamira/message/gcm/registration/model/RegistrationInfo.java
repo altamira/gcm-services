@@ -31,7 +31,7 @@ public class RegistrationInfo implements Serializable {
 	@DynamoDBRangeKey
 	private String token;
 
-	private DeviceInfo deviceInfo; // Device
+	private Device device; // Device
 
 	public RegistrationInfo() {
 		this.id = java.util.UUID.randomUUID().toString();
@@ -42,13 +42,13 @@ public class RegistrationInfo implements Serializable {
 	public RegistrationInfo(
 			@JsonProperty("email") String email,
 			@JsonProperty("token") String token,
-			@JsonProperty("deviceInfo") DeviceInfo deviceInfo) {
+			@JsonProperty("device") Device device) {
 		super();
 		this.id = java.util.UUID.randomUUID().toString();
 		this.timestamp = new Date();
 		this.email = email;
 		this.token = token;
-		this.deviceInfo = deviceInfo;
+		this.device = device;
 	}
 
 	public String getId() {
@@ -83,12 +83,12 @@ public class RegistrationInfo implements Serializable {
 		this.token = token;
 	}
 
-	public DeviceInfo getDeviceInfo() {
-		return deviceInfo;
+	public Device getDevice() {
+		return device;
 	}
 
-	public void setDeviceInfo(DeviceInfo deviceInfo) {
-		this.deviceInfo = deviceInfo;
+	public void setDevice(Device device) {
+		this.device = device;
 	}
 
 }

@@ -1,0 +1,8 @@
+<div class="jumbotron" ng-controller="RegistrationCtrl as rc">
+    <h2><img src=images/logo.png> Altamira Industria Metal&utilde;rgica</h1>
+
+    <p ng-show="!$root.valid">Para validar o seu aplicativo clique o bot&atilde;o abaixo.</p>
+    <p ng-show="$root.valid">Seu e-mail foi validado, o aplicativo esta pronto para uso.</p>
+    <p ng-show="!$root.valid"><button ng-click="rc.validate()" class="btn btn-lg btn-success">Validar</button></p>
+
+</div>

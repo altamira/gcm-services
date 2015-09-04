@@ -1,5 +1,6 @@
 package br.com.altamira.message.gcm.registration.service;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,16 +8,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.aws.messaging.core.NotificationMessagingTemplate;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.altamira.message.gcm.message.MessageToProcess;
 import br.com.altamira.message.gcm.registration.model.RegistrationInfo;
+import br.com.altamira.message.gcm.registration.model.RegistrationTempInfo;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -50,20 +55,17 @@ public class RegistrationController {
 	 * Register an new Device to Push Notification
 	 * 
 	 * @param deviceInfo
-	 * @throws JsonProcessingException
+	 * @throws IOException 
 	 */
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody RegistrationInfo registrationInfo(
-			@RequestBody RegistrationInfo registrationInfo)
-			throws JsonProcessingException {
+	public @ResponseBody RegistrationTempInfo registrationTempInfo(
+			@RequestBody RegistrationTempInfo registrationInfo)
+			throws IOException {
 		LOG.info("Registering a new device: {}", registrationInfo.toString());
 
-		RegistrationInfo register = registrationService.register(registrationInfo);
+		RegistrationTempInfo register = registrationService.registerTemp(registrationInfo);
 		
-		MessageToProcess message = new MessageToProcess(register);
-		
-		this.notificationMessagingTemplate.sendNotification(MSG_REGISTERED,
-				message.toString(), "Notify a new Device Registered");
+		registrationService.requestEmailValidation(register);
 		
 		return register;
 	}
@@ -72,21 +74,16 @@ public class RegistrationController {
 	 * Register an new Device to Push Notification
 	 * 
 	 * @param deviceInfo
-	 * @throws JsonProcessingException
+	 * @throws IOException 
 	 */
 	@RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody RegistrationInfo updateRegistrationInfo(
 			@RequestBody RegistrationInfo registrationInfo)
-			throws JsonProcessingException {
+			throws IOException {
 		LOG.info("Update registration info for a device: {}",
 				registrationInfo.toString());
 
-		RegistrationInfo register = registrationService.register(registrationInfo);
-		
-		MessageToProcess message = new MessageToProcess(register);
-		
-		this.notificationMessagingTemplate.sendNotification(MSG_REGISTERED,
-				message.toString(), "Notify Device Register Info updated");
+		RegistrationInfo register = registrationService.update(registrationInfo);
 		
 		return register;
 	}
@@ -110,4 +107,25 @@ public class RegistrationController {
 		return tokens;
 	}
 
+	/**
+	 * Register an new Device to Push Notification
+	 * 
+	 * @param deviceInfo
+	 * @throws JsonProcessingException
+	 */
+	@RequestMapping(value = "/validate/{token}", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	public void validate(
+			@PathVariable("token") String token) throws JsonProcessingException {
+		LOG.info("Request to validate token: {}", token);
+
+		RegistrationInfo register = registrationService.validate(token);
+		
+		if (register != null) {
+			MessageToProcess message = new MessageToProcess(register);
+			
+			this.notificationMessagingTemplate.sendNotification(MSG_REGISTERED,
+					message.toString(), "Notify a new Device Registered");
+		}
+	}
 }
